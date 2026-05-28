@@ -1,2 +1,0 @@
-# actividad7-pandas
-
