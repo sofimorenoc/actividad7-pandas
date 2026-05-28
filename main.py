@@ -28,8 +28,8 @@ print(df.head())
 print(df.columns)
 
 # validar valores vacíos
-if df.isna().any().any():
-    raise ValueError("El dataset tiene valores vacíos")
+if df.isna().all().all():
+    raise ValueError("El dataset está completamente vacío")
 
 # validar tiempo creciente
 if not df["timestamp"].is_monotonic_increasing:
