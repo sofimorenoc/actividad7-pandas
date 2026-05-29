@@ -73,25 +73,43 @@ def calcular_hits(df):
 
 def calcular_hit_rate(df):
     """
-    Calcula el hit rate de cada jugador: proporción de frames con hit
-    sobre el total de frames donde el jugador fue detectado (activity_roi = True).
+   Calcula el hit rate de cada jugador: cantidad de hits por segundo
+   sobre la duración total del experimento.
+
+   Parámetros:
+       df (pd.DataFrame): DataFrame cargado desde el CSV del experimento.
+
+   Retorna:
+       dict: Diccionario con hit rate de A y hit rate de B (hits/segundo).
+   """
+   duracion_total = df["tiempo_relativo"].iloc[-1]
+
+   hit_rate_A = df["hit_A"].sum() / duracion_total
+   hit_rate_B = df["hit_B"].sum() / duracion_total
+
+   print(f"Hit rate Augusto (A): {hit_rate_A:.4f} hits/seg")
+   print(f"Hit rate Matías (B):  {hit_rate_B:.4f} hits/seg")
+
+   return {"hit_rate_A": hit_rate_A, "hit_rate_B": hit_rate_B}
+# Primer hit
+
+"""
+    Calcula el tiempo relativo del primer hit de cada jugador.
+    Sirve para ver quién empezó a acertar más rápido.
  
     Parámetros:
         df (pd.DataFrame): DataFrame cargado desde el CSV del experimento.
  
     Retorna:
-        dict: Diccionario con hit rate de A y hit rate de B (valores entre 0 y 1).
+        dict: Diccionario con el tiempo del primer hit de A y de B (en segundos).
     """
-    frames_activos_A = df["activity_roi_A"].sum()
-    frames_activos_B = df["activity_roi_B"].sum()
+    primer_hit_A = df.loc[df["hit_A"] == True, "tiempo_relativo"].iloc[0]
+    primer_hit_B = df.loc[df["hit_B"] == True, "tiempo_relativo"].iloc[0]
  
-    hit_rate_A = df["hit_A"].sum() / frames_activos_A if frames_activos_A > 0 else 0
-    hit_rate_B = df["hit_B"].sum() / frames_activos_B if frames_activos_B > 0 else 0
+    print(f"Primer hit Augusto (A): {primer_hit_A:.2f} seg")
+    print(f"Primer hit Matías (B):  {primer_hit_B:.2f} seg")
  
-    print(f"Hit rate Augusto (A): {hit_rate_A:.4f}")
-    print(f"Hit rate Matías (B):  {hit_rate_B:.4f}")
- 
-    return {"hit_rate_A": hit_rate_A, "hit_rate_B": hit_rate_B}
+    return {"primer_hit_A": primer_hit_A, "primer_hit_B": primer_hit_B}
 
 # Distancia recorrida
 
