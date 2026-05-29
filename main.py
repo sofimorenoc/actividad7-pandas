@@ -1,6 +1,11 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import os
+
+from graficos import crear_carpeta_graficos
+from graficos import grafico_hits_por_jugador
+from graficos import grafico_evolucion_hits
+
+
 
 """
 Carga y validación de datos experimentales
@@ -185,3 +190,11 @@ dist_x_hit  = calcular_distancia_por_hit(distancias, hits)
 ganador     = determinar_ganador(hits)
 resumen     = resumen_por_condicion(df)
 df_activo   = filtrar_frames_con_actividad(df)
+
+
+
+crear_carpeta_graficos()
+grafico_hits_por_jugador(df)
+grafico_evolucion_hits(df)
+
+
